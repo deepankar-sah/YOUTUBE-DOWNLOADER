@@ -1,17 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Main = () => {
+  // State
   const [url, setUrl] = useState("");
   const [format, setFormat] = useState("mp4");
+  const [videoId, setVideoId] = useState<string | null>(null);
 
+  // Handle Download Function
   const handleDownload = () => {
-    if (!url) return alert("Please enter a Youtube URL");
+    if (!url) return alert("Please enter a Youtube URL first.");
     console.log("Download started for:", url);
+    console.log("Format:", format);
+    console.log("Video ID:", videoId);
   };
+
+  // Function to extract video ID from url
+  const extractYouTubeVideoId = (link: string): string | null => {
+    const regExp =
+      /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/;
+    const match = link.match(regExp);
+    return match ? match[1] : null;
+  };
+
+  // Update video id when url changes
+  useEffect(() => {
+    const id = extractYouTubeVideoId(url);
+    setVideoId(id);
+  }, [url]);
+
   return (
     <div>
+      {/*  URL Input */}
       <input
         type="text"
         value={url}
@@ -46,10 +67,23 @@ const Main = () => {
         </label>
       </div>
 
+      {/*  Thumbnail Preview */}
+
+      {videoId && (
+        <div className="mt-6 text-center">
+          <p className="text-sm text-white mb-2">Video Preview</p>
+          <img
+            src={`https://img.youtube.com/vi/${videoId}/0.jpg`}
+            alt="Youtube Thumbnail"
+            className="w-full rounded-xl border border-gray-300 shadow-md"
+          />
+        </div>
+      )}
+
       {/*  Download Button */}
       <button
         onClick={handleDownload}
-        disabled={!url}
+        disabled={!url || !videoId}
         className={`mt-6 w-full ${
           url
             ? "bg-blue-600 hover:bg-blue-700"
