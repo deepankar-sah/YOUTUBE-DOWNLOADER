@@ -6,6 +6,7 @@ const Main = () => {
   // State
   const [url, setUrl] = useState("");
   const [format, setFormat] = useState("mp4");
+  const [quality, setQuality] = useState("1080p");
   const [videoId, setVideoId] = useState<string | null>(null);
 
   // Handle Download Function
@@ -41,31 +42,51 @@ const Main = () => {
         className="w-full px-4 py-2 rounded-xl border text-white border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       {/* Format Options */}
-      <div className="mt-4 flex justify-around text-gray-700 dark:text-gray-300">
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            name="format"
-            value="mp4"
-            checked={format === "mp4"}
-            onChange={(e) => setFormat(e.target.value)}
-            className="accent-blue-600"
-          />
-          <span>MP4 (Video)</span>
-        </label>
+      {videoId && (
+        <div className="mt-4 flex justify-around text-gray-700 ">
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="format"
+              value="mp4"
+              checked={format === "mp4"}
+              onChange={(e) => setFormat(e.target.value)}
+              className="accent-blue-600"
+            />
+            <span>MP4 (Video)</span>
+          </label>
 
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            name="format"
-            value="mp3"
-            checked={format === "mp3"}
-            onChange={(e) => setFormat(e.target.value)}
-            className="accent-green-600"
-          />
-          <span>MP3 (Audio)</span>
-        </label>
-      </div>
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="format"
+              value="mp3"
+              checked={format === "mp3"}
+              onChange={(e) => setFormat(e.target.value)}
+              className="accent-green-600"
+            />
+            <span>MP3 (Audio)</span>
+          </label>
+        </div>
+      )}
+
+      {/*  Quality Selector */}
+      {videoId && (
+        <div className="mt-4 text-gray-700 ">
+          <label className="block mb-1 font-medium">Select Quality:</label>
+          <select
+            value={quality}
+            onChange={(e) => setQuality(e.target.value)}
+            className="w-full px-4 py-2 rounded-lg border border-gray-300  focus:outline-none focus:ring-2 focus:ring-blue-500  dark:text-white"
+          >
+            <option value="4k">4K (2160p)</option>
+            <option value="1080p">Full HD (1080p)</option>
+            <option value="720p">HD (720p)</option>
+            <option value="480p">SD (480p)</option>
+            <option value="360p">Low (360p)</option>
+          </select>
+        </div>
+      )}
 
       {/*  Thumbnail Preview */}
 
@@ -92,7 +113,7 @@ const Main = () => {
       >
         ⬇️ Download as {format.toUpperCase()}
       </button>
-      <p className="mt-4 text-sm text-center text-gray-500 dark:text-gray-400">
+      <p className="mt-4 text-sm text-center text-white ">
         We do not store or track any data. Paste → Select → Download!
       </p>
     </div>

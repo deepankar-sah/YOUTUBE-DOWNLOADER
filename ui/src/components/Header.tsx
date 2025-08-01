@@ -1,6 +1,6 @@
 const Header = () => {
   return (
-    <div className=" h-100vh flex  itmes-center ">
+    <div className=" h-auto flex  itmes-center ">
       <h1 className="text-3xl font-bold text-white">
         Youtube Video Downloader
       </h1>
