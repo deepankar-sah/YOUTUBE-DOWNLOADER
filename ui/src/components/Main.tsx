@@ -43,7 +43,7 @@ const Main = () => {
       />
       {/* Format Options */}
       {videoId && (
-        <div className="mt-4 flex justify-around text-gray-700 ">
+        <div className="mt-4 flex justify-around text-white ">
           <label className="flex items-center space-x-2">
             <input
               type="radio"
@@ -72,18 +72,28 @@ const Main = () => {
 
       {/*  Quality Selector */}
       {videoId && (
-        <div className="mt-4 text-gray-700 ">
+        <div className="mt-4 text-white ">
           <label className="block mb-1 font-medium">Select Quality:</label>
           <select
             value={quality}
             onChange={(e) => setQuality(e.target.value)}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300  focus:outline-none focus:ring-2 focus:ring-blue-500  dark:text-white"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300  focus:outline-none focus:ring-2 focus:ring-blue-500  text-white"
           >
-            <option value="4k">4K (2160p)</option>
-            <option value="1080p">Full HD (1080p)</option>
-            <option value="720p">HD (720p)</option>
-            <option value="480p">SD (480p)</option>
-            <option value="360p">Low (360p)</option>
+            <option value="4k" className="text-black">
+              4K (2160p)
+            </option>
+            <option value="1080p" className="text-black">
+              Full HD (1080p)
+            </option>
+            <option value="720p" className="text-black">
+              HD (720p)
+            </option>
+            <option value="480p" className="text-black">
+              SD (480p)
+            </option>
+            <option value="360p" className="text-black">
+              Low (360p)
+            </option>
           </select>
         </div>
       )}

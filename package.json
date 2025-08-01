@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "concurrently": "^9.2.0",
-    "electron": "^37.2.5"
+    "electron": "^37.2.5",
+    "ytdl-core": "^4.11.5"
   }
 }
