@@ -9,6 +9,12 @@
     "dev:next": "cd ui && npm run dev",
     "build:main": "tsc"
   },
+  "extraResources": [
+    {
+      "from": "public/bin/yt-dlp.exe",
+      "to": "yt-dlp.exe"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/deepankar-sah/YOUTUBE-DOWNLOADER.git"
@@ -28,7 +34,6 @@
   },
   "dependencies": {
     "concurrently": "^9.2.0",
-    "electron": "^37.2.5",
-    "ytdl-core": "^4.11.5"
+    "electron": "^37.2.5"
   }
 }

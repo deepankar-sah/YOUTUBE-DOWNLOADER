@@ -2,12 +2,43 @@
 
 import { useEffect, useState } from "react";
 
+declare global {
+  interface Window {
+    electronAPI?: {
+      sendDownloadRequest: (data: any) => void;
+      onDownloadComplete: (callback: any) => void;
+      onDownloadError: (callback: any) => void;
+    };
+  }
+}
+
 const Main = () => {
   // State
   const [url, setUrl] = useState("");
   const [format, setFormat] = useState("mp4");
   const [quality, setQuality] = useState("1080p");
   const [videoId, setVideoId] = useState<string | null>(null);
+  const electron = window.electronAPI;
+
+  useEffect(() => {
+    console.log(electron);
+
+    if (electron) {
+      electron.onDownloadComplete((_e: any, data: any) => {
+        alert(`${data.title}\nSaved to: ${data.filePath}`);
+      });
+
+      electron.onDownloadError((_e: any, message: any) => {
+        alert(`Download failed: ${message}`);
+      });
+    }
+  }, []);
+
+  // Update video id when url changes
+  useEffect(() => {
+    const id = extractYouTubeVideoId(url);
+    setVideoId(id);
+  }, [url]);
 
   // Handle Download Function
   const handleDownload = () => {
@@ -15,6 +46,24 @@ const Main = () => {
     console.log("Download started for:", url);
     console.log("Format:", format);
     console.log("Video ID:", videoId);
+
+    if (!electron) {
+      alert("electronAPI is not available. Check preload setup!");
+      return;
+    }
+    try {
+      console.log("Sending download request to Electron");
+      electron.sendDownloadRequest({
+        url,
+        format,
+        quality,
+      });
+
+      console.log("Download request sucessfully send");
+    } catch (err) {
+      alert("download failed");
+      console.log("Download failed error-", err);
+    }
   };
 
   // Function to extract video ID from url
@@ -24,12 +73,6 @@ const Main = () => {
     const match = link.match(regExp);
     return match ? match[1] : null;
   };
-
-  // Update video id when url changes
-  useEffect(() => {
-    const id = extractYouTubeVideoId(url);
-    setVideoId(id);
-  }, [url]);
 
   return (
     <div>
