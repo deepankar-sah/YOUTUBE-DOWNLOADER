@@ -18,9 +18,9 @@ const Main = () => {
   const [format, setFormat] = useState("mp4");
   const [quality, setQuality] = useState("1080p");
   const [videoId, setVideoId] = useState<string | null>(null);
-  const electron = window.electronAPI;
 
   useEffect(() => {
+    const electron = window.electronAPI;
     console.log(electron);
 
     if (electron) {
@@ -42,6 +42,7 @@ const Main = () => {
 
   // Handle Download Function
   const handleDownload = () => {
+    const electron = window.electronAPI;
     if (!url) return alert("Please enter a Youtube URL first.");
     console.log("Download started for:", url);
     console.log("Format:", format);

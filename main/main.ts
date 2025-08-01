@@ -73,9 +73,7 @@ ipcMain.handle("start-download", async (event, { url, format, quality }) => {
     const args = [
       url,
       "-f",
-      format === "mp3"
-        ? "bestaudio"
-        : `bestvideo[height<=${quality}]+bestaudio/best`,
+      format === "mp3" ? "bestaudio" : `bestvideo[height<=${quality}]`,
       "-o",
       outputTemplate,
     ];
